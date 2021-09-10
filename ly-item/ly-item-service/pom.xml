@@ -12,7 +12,19 @@
     <artifactId>ly-item-service</artifactId>
     
     <dependencies>
-        <!--服务Api-->
+        <!-- Item interface -->
+        <dependency>
+            <groupId>top.mylady.item</groupId>
+            <artifactId>ly-item-interface</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        
+        <!--Common-->
+        <dependency>
+            <groupId>top.mylady.common</groupId>
+            <artifactId>ly-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         
         <dependency>
             <groupId>org.springframework.boot</groupId>
