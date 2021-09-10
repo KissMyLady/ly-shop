@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>top.mylady</groupId>
+    <artifactId>le-shop</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>ly-registry</module>
+        <module>ly-gateway</module>
+        <module>ly-item</module>
+        <module>ly-common</module>
+    </modules>
+    
+    <!-- 继承Spring boot工程 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.5.RELEASE</version> <!--2019 449-->
+    </parent>
+    
+    <!--参考: https://github.com/KissMyLady/mylady-leadnews/blob/master/pom.xml-->
+    <properties>
+        <!--必须要有-->
+        <java.version>11</java.version>
+        <!-- 项目源码及编译输出的编码 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 项目编译JDK版本 -->
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        
+        <!-- Spring全家桶 -->
+        <spring.boot.version>2.1.5.RELEASE</spring.boot.version>
+        <spring.boot.admin.version>2.1.6</spring.boot.admin.version>
+        <spring.cloud.version>Greenwich.RELEASE</spring.cloud.version>
+        <spring.jwt.version>1.1.1.RELEASE</spring.jwt.version>
+        
+        <!--数据库驱动-->
+        <mysql.version>8.0.20</mysql.version> <!--5.1.6-->
+        <mybatis.version>3.5.1</mybatis.version>
+        <mybatis.spring.version>2.0.1</mybatis.spring.version>
+        <mybatis.starter.version>2.0.1</mybatis.starter.version>
+        <pagehelper.version>1.2.3</pagehelper.version>
+        
+        <!--FastDFS-->
+        <fastDFS.client.version>1.27.2</fastDFS.client.version>
+        
+        <fastdfs.version>0.2.0</fastdfs.version>
+        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.dataformat.version>2.9.9</fastjson.dataformat.version>
+        
+        <commons.io.version>2.6</commons.io.version>
+        <commons.codec.version>1.12</commons.codec.version>
+        <lombok.version>1.18.8</lombok.version>
+        
+        <lang3.version>3.5</lang3.version>
+        <jsoup.version>1.10.2</jsoup.version>
+        <jwt.version>0.9.1</jwt.version>
+        
+        <junit.version>4.12</junit.version>
+        <searchbox.version>6.3.1</searchbox.version>
+        <elasticsearch.version>7.2.0</elasticsearch.version>
+        <reflections.version>0.9.11</reflections.version>
+    </properties>
+    
+    
+    <dependencies>
+        <!--日志处理包-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-log4j2</artifactId>-->
+        <!--            <version>2.1.5.RELEASE</version>-->
+        <!--        </dependency>-->
+        
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    
+    
+    <dependencyManagement>
+        <dependencies>
+            
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-log4j2</artifactId>
+                <version>2.1.5.RELEASE</version>
+            </dependency>
+            
+            <!-- =======================================-->
+            <!-- ↓ ↓ ↓ ↓ ↓ ↓ ↓ Spring 全家桶 ↓ ↓ ↓ ↓ ↓ ↓ -->
+            <!-- =======================================-->
+            <!--Spring Boot start -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            
+            <!-- Start-Web -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            
+            <!-- Cloud-dependencies -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- Admin-dependencies -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-dependencies</artifactId>
+                <version>${spring.boot.admin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- JWT -->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-jwt</artifactId>
+                <version>${spring.jwt.version}</version>
+            </dependency>
+            <!-- =======================================-->
+            <!-- ↑ ↑ ↑ ↑ ↑ ↑ ↑ Spring 全家桶 ↑ ↑ ↑ ↑ ↑ ↑-->
+            <!-- =======================================-->
+            
+            
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+            
+            <!--Apache 工具包包-->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${lang3.version}</version>
+            </dependency>
+            
+            <!--加密处理包-->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons.codec.version}</version>
+            </dependency>
+            
+            
+            <!-- =======================================-->
+            <!-- ↓ ↓ ↓ ↓ ↓ MySQL MyBatis Mapper ↓ ↓ ↓ ↓ -->
+            <!-- =======================================-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-spring</artifactId>
+                <version>${mybatis.spring.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.starter.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <!-- =======================================-->
+            <!-- ↑ ↑ ↑ ↑ ↑ MySQL MyBatis Mapper ↑ ↑ ↑ ↑ -->
+            <!-- =======================================-->
+            
+            
+            <!-- jsoup -->
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+            
+            <!-- jwt -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            
+            <!-- fastjson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-cbor</artifactId>
+                <version>${fastjson.dataformat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${fastjson.dataformat.version}</version>
+            </dependency>
+            
+            <!-- junit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+            
+            <!-- ======================================-->
+            <!-- ↓ ↓ ↓ ↓ ↓ ↓ ↓ 工具配置包 ↓ ↓ ↓ ↓ ↓ ↓ ↓ -->
+            <!-- ======================================-->
+            
+            <!--FastDFS-->
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>${fastDFS.client.version}</version>
+            </dependency>
+            
+            <!-- ======================================-->
+            <!-- ↑ ↑ ↑ ↑ ↑ ↑ ↑ 工具配置包 ↑ ↑ ↑ ↑ ↑ ↑ ↑ -->
+            <!-- ======================================-->
+        
+        </dependencies>
+    </dependencyManagement>
+    
+    <!--
+        1.dependencyManagement
+            只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖。
+            如果不在子项目中声明依赖，是不会从父项目中继承下来的；
+            只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项，并且version和scope都读取自父pom;
+            另外如果子项目中指定了版本号，那么会使用子项目中指定的jar版本。
+        2.dependencies
+            即使在子项目中不写该依赖项，那么子项目仍然会从父项目中继承该依赖项（全部继承）
+    
+        优点：
+            1.统一管理项目的版本号，确保应用的各个项目的依赖和版本一致，才能保证测试的和发布的是相同的成果，
+                因此，在顶层pom中定义共同的依赖关系。
+            2.想升级或者切换到另一个版本时，只需要在父类容器里更新，不需要任何一个子项目的修改；
+                如果某个子项目需要另外一个版本号时，只需要在dependencies中声明一个版本号即可。
+                子类就会使用子类声明的版本号，不继承于父类版本号。
+    -->
+    
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+    
+
+</project>
