@@ -6,9 +6,10 @@
         <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
         <property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS}|%-5level| %logger{36} |%L row: %msg%n" />
         <property name="default" value="%d{DEFAULT}|%-4sn|%-5level|M: %M: %l|%L row: %msg%n"/>
-        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/ly-shop/logs/goods" />
+        <!-- 定义日志存储的路径 -->
+        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/leyou_springBoot/logs/upload" />
         <property name="CONSOLE_PATTERN">%d{DEFAULT}|%-4sn|%-5level|M: %M|%msg%n</property>
-        <property name="FILE_NAME">goods-service</property>
+        <property name="FILE_NAME">upload-service</property>
     </properties>
     
     <!--先定义所有的appender-->
@@ -24,7 +25,7 @@
         <console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${default}"/> <!--输出日志的格式 -->
             <!--控制台只输出level及其以上级别的信息（onMatch）, 其他的直接拒绝（onMismatch）-->
-            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
         </console>
         
         <!-- 这个会打印出所有的info及以下级别的信息, 每次大小超过size, 则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩, 作为存档-->
@@ -76,31 +77,33 @@
         <!--若是additivity设为false, 则子Logger 只会在自己的appender里输出, 而不会在 父Logger 的appender里输出。-->
         <logger name="org.apache" level="warn" />
         
-        <logger name="org.springframework" level="INFO" additivity="false">
+        <logger name="com.sun.jersey" level="off" additivity="false">
             <AppenderRef ref="Console"/>
         </logger>
         
-        <Logger name="org.mybatis" level="WARN" additivity="false">
+        <logger name="org.springframework" level="warn" additivity="false">
             <AppenderRef ref="Console"/>
-        </Logger>
+        </logger>
         
-<!--        <logger name="com.zaxxer" level="off" additivity="false">-->
-<!--            <AppenderRef ref="Console"/>-->
-<!--        </logger>-->
-<!--        -->
-
+        <logger name="com.zaxxer" level="off" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
+        
         <Logger name="com.netflix" level="off" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-
-<!--        <Logger name="org.hibernate" level="off" additivity="false">-->
-<!--            <AppenderRef ref="Console"/>-->
-<!--        </Logger>-->
-<!--        -->
+        
+        <Logger name="org.hibernate" level="off" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        
+        <logger name="com.sun.jersey" level="off" additivity="false">
+            <AppenderRef ref="Console"/>
+        </logger>
         
         <root level="debug">
             <appender-ref ref="Console"/>
-<!--            <appender-ref ref="Filelog"/>-->
+            <appender-ref ref="Filelog"/>
 <!--            <appender-ref ref="RollingFileInfo"/>-->
 <!--            <appender-ref ref="RollingFileWarn"/>-->
 <!--            <appender-ref ref="RollingFileError"/>-->

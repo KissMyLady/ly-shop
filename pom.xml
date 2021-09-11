@@ -13,7 +13,8 @@
         <module>ly-gateway</module>
         <module>ly-item</module>
         <module>ly-common</module>
-        <module>ly-utils</module>
+        <module>ly-auth</module>
+        <module>ly-upload</module>
     </modules>
     
     <!-- 继承Spring boot工程 -->
