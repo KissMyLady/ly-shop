@@ -9,8 +9,9 @@ import top.mylady.item.mappers.User_UserMapper;
 import java.util.List;
 import top.mylady.item.pojo.Category;
 import top.mylady.item.pojo.User;
-
 import javax.annotation.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 
 /**
@@ -31,17 +32,17 @@ public class CategoryService {
     /**
      * 查询商品分类, 返回相应
      */
-    public ResponseResult queryCategoryByPid(Long pid){
+    public ResponseEntity queryCategoryByPid(Long pid){
         if (pid == null || pid.longValue() < 0){
-            return ResponseResult.errorResult(404, "参数不正确");
+            pid = 1L;
         }
         try {
             List<Category> categoryList = goods_categoryMapper.selectByParentId(pid);
-            return ResponseResult.okResult(categoryList);
+            return ResponseEntity.ok(categoryList);
         }
         catch (Exception e){
             logger.warn("警告, 查询错误, 原因是: "+ e);
-            return ResponseResult.okResult(404, ""+e);
+            return new ResponseEntity<>(""+e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
