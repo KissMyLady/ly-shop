@@ -75,19 +75,19 @@
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
 
-        <logger name="com.zaxxer" level="debug" additivity="false">
+        <logger name="com.zaxxer" level="warn" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </logger>
         
-        <Logger name="org.springframework" level="debug" additivity="false">
+        <Logger name="org.springframework" level="warn" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
-        <Logger name="org.apache.http" level="debug" additivity="false">
+        <Logger name="org.apache.http" level="off" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
 
-        <Logger name="com.netflix" level="debug" additivity="false">
+        <Logger name="com.netflix" level="off" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
 
