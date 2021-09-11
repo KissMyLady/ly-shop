@@ -15,6 +15,7 @@
         <module>ly-common</module>
         <module>ly-auth</module>
         <module>ly-upload</module>
+        <module>ly-search</module>
     </modules>
     
     <!-- 继承Spring boot工程 -->

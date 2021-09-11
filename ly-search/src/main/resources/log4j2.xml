@@ -7,7 +7,7 @@
         <property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS}|%-5level| %logger{36} |%L row: %msg%n" />
         <property name="default" value="%d{DEFAULT}|%-4sn|%-5level|M: %M: %l|%L row: %msg%n"/>
         <!-- 定义日志存储的路径 -->
-        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/ly-shop/logs/register" />
+        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/ly-shop/logs/search" />
         <property name="CONSOLE_PATTERN">%d{DEFAULT}|%-4sn|%-5level|M: %M|%msg%n</property>
         <property name="FILE_NAME">leyou-eureka</property>
     </properties>
@@ -103,7 +103,7 @@
         </Logger>
         
         
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="Console"/>
             <appender-ref ref="Filelog"/>
             <appender-ref ref="RollingFileInfo"/>
