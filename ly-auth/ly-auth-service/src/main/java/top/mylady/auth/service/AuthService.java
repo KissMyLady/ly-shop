@@ -1,10 +1,8 @@
 package top.mylady.auth.service;
-
 import org.springframework.stereotype.Service;
 import top.mylady.auth.config.JwtProperties;
 import top.mylady.auth.entity.UserInfo;
 import top.mylady.auth.utils.JwtUtils;
-
 import javax.annotation.Resource;
 
 
@@ -15,6 +13,10 @@ public class AuthService {
     @Resource
     private JwtProperties jwtProperties;
 
+    /**
+     * 传入用户数据, 查询校验
+     * 返回token字符串
+     */
     public String authentication(String username, String password){
         //从数据库查询用户, 校验是否存在用户;
 

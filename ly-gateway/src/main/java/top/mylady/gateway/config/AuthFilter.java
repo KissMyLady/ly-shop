@@ -1,15 +1,17 @@
 package top.mylady.gateway.config;
 import com.netflix.zuul.ZuulFilter;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import org.springframework.beans.factory.annotation.Autowired;
+import top.mylady.auth.entity.UserInfo;
 import top.mylady.auth.utils.JwtUtils;
 import top.mylady.common.utils.CookieUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.springframework.http.ResponseEntity;
 
 
 @Component
@@ -19,12 +21,12 @@ public class AuthFilter extends ZuulFilter{
 
     //Ulr路径白命令
     public List<String> getAllowPaths(){
-        allowPaths.add("/api/auth");
-        allowPaths.add("/api/search");
-        allowPaths.add("/api/user/register");
-        allowPaths.add("/api/user/check");
-        allowPaths.add("/api/user/code");
-        allowPaths.add("/api/item");
+        allowPaths.add("/api/auth");           //登录校验
+        allowPaths.add("/api/search");         //搜索
+        allowPaths.add("/api/user/register");  //注册
+        allowPaths.add("/api/user/check");     //数据校验
+        allowPaths.add("/api/user/code");      //发送验证码
+        allowPaths.add("/api/item");           //商品
         return allowPaths;
     }
 
@@ -84,13 +86,16 @@ public class AuthFilter extends ZuulFilter{
         if (token_params != null){
             //校验token
             try {
-                JwtUtils.getInfoFromToken(token_params, this.jwtProperties.getPublicKey());
+                UserInfo user = JwtUtils.getInfoFromToken(token_params, this.jwtProperties.getPublicKey());
+                System.out.println("校验token, 打印提取的user: "+ user);
+                return null;
             }
             catch (Exception e){
-                System.out.println("错误, 原因e: "+ e);
-                return false;
+                context.setSendZuulResponse(false);
+                context.setResponseStatusCode(404);
+                context.setResponseBody("{\"status\": 404, \"msg\": \"request error!\"}");
+                return null;
             }
-            return null;
         }
 
         try {
@@ -99,7 +104,7 @@ public class AuthFilter extends ZuulFilter{
         }
         catch (Exception e){
             System.out.println("网关过滤器token错误, 原因e: "+ e);
-            return false;
+            return null;
         }
         return null;
     }
