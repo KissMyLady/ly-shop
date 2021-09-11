@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--Category 商品类别查询-->
+<mapper namespace="top.mylady.item.mappers.Goods_CategoryMapper">
+    
+    <resultMap id="BaseResultMap" type="top.mylady.item.pojo.Category">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="parentId" property="parentId"/>
+        <result column="isParent" property="isParent"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+    
+    <!--根据parentId查询子类目, 返回一个List列表-->
+    <select id="selectByParentId" resultMap="BaseResultMap">
+        select * from tb_category where parent_id=#{pid}
+    </select>
+    
+
+</mapper>

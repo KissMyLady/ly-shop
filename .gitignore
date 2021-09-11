@@ -11,4 +11,4 @@ target/
 #忽略所有.iml文件
 *.iml
 
-# git config core.excludesfile .gitignore
+# git top.mylady.item.config core.excludesfile .gitignore

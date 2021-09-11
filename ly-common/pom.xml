@@ -12,7 +12,6 @@
     <groupId>top.mylady.common</groupId>
     <artifactId>ly-common</artifactId>
     
-    
     <dependencies>
     
         <!-- Spring boot starter -->

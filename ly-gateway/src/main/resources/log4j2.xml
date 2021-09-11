@@ -75,32 +75,32 @@
     <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
     <loggers>
 
-        <logger name="com.zaxxer" level="WARN" additivity="false">
+        <logger name="com.zaxxer" level="debug" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </logger>
         
-        <Logger name="org.springframework" level="INFO" additivity="false">
+        <Logger name="org.springframework" level="debug" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
-        <Logger name="org.apache.http" level="WARN" additivity="false">
+        <Logger name="org.apache.http" level="off" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
-        
+
         <Logger name="com.netflix" level="off" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
-        
-        <Logger name="io.lettuce" level="off" additivity="false">
+
+        <Logger name="io.lettuce" level="debug" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
-        <root level="info">
+        <root level="debug">
             <appender-ref ref="Console"/>
-            <appender-ref ref="Filelog"/>
-            <appender-ref ref="RollingFileInfo"/>
-            <appender-ref ref="RollingFileWarn"/>
-            <appender-ref ref="RollingFileError"/>
+<!--            <appender-ref ref="Filelog"/>-->
+<!--            <appender-ref ref="RollingFileInfo"/>-->
+<!--            <appender-ref ref="RollingFileWarn"/>-->
+<!--            <appender-ref ref="RollingFileError"/>-->
         </root>
     
     </loggers>
