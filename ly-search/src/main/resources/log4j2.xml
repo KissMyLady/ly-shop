@@ -94,21 +94,28 @@
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
-        <Logger name="com.netflix.discovery" level="WARN" additivity="false">
+        <Logger name="com.netflix" level="WARN" additivity="false">
+            <AppenderRef ref="RollingFileWarn"/>
+        </Logger>
+ 
+        <Logger name="org.hibernate" level="WARN" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
         <Logger name="com.netflix.eureka" level="WARN" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
-        
+    
+        <Logger name="org.elasticsearch" level="WARN" additivity="false">
+            <AppenderRef ref="RollingFileWarn"/>
+        </Logger>
         
         <root level="debug">
             <appender-ref ref="Console"/>
             <appender-ref ref="Filelog"/>
-            <appender-ref ref="RollingFileInfo"/>
-            <appender-ref ref="RollingFileWarn"/>
-            <appender-ref ref="RollingFileError"/>
+<!--            <appender-ref ref="RollingFileInfo"/>-->
+<!--            <appender-ref ref="RollingFileWarn"/>-->
+<!--            <appender-ref ref="RollingFileError"/>-->
         </root>
     
     </loggers>

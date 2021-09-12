@@ -9,7 +9,7 @@ import top.mylady.search.pojo.Product;
 
 
 /**
- * SpringData集成测试
+ * 索引操作
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,13 +19,14 @@ public class ProductTest {
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     /**
-     * 创建索引并增加映射配置
+     * 启动此测试类, 用来创建索引并增加映射配置
+     * 查询创建的索引: http://116.62.101.170:9200/_cat/indices?v
      */
     @Test
     public void createIndex(){
         elasticsearchRestTemplate.createIndex(Product.class);
         // 参考文章: https://blog.csdn.net/weixin_44257023/article/details/110148280
-        System.out.println("创建索引");
+        System.out.println("创建索引成功");
     }
 
     /**
