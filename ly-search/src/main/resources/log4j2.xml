@@ -7,7 +7,7 @@
         <property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS}|%-5level| %logger{36} |%L row: %msg%n" />
         <property name="default" value="%d{DEFAULT}|%-4sn|%-5level|M: %M: %l|%L row: %msg%n"/>
         <!-- 定义日志存储的路径 -->
-        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/ly-shop/logs/register" />
+        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/ly-shop/logs/search" />
         <property name="CONSOLE_PATTERN">%d{DEFAULT}|%-4sn|%-5level|M: %M|%msg%n</property>
         <property name="FILE_NAME">leyou-eureka</property>
     </properties>
@@ -29,7 +29,8 @@
         </console>
         
         <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-        <RollingFile name="RollingFileInfo" fileName="${FILE_PATH}/info.log"
+        <RollingFile name="RollingFileInfo"
+                     fileName="${FILE_PATH}/info.log"
                      filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log">
             <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
@@ -78,37 +79,32 @@
             <AppenderRef ref="RollingFileWarn"/>
         </logger>
         
-        <logger name="com.zaxxer.hikari.pool.HikariPool" level="debug" additivity="false">
-            <AppenderRef ref="RollingFileWarn"/>
-        </logger>
-        
         <logger name="com.zaxxer" level="debug" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </logger>
         
-        <Logger name="org.springframework" level="debug" additivity="false">
+        <Logger name="org.springframework" level="info" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
-        <Logger name="org.apache.http" level="debug" additivity="false">
+        <Logger name="org.apache" level="debug" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
-        <Logger name="com.netflix.discovery" level="debug" additivity="false">
+        <Logger name="com.netflix" level="warn" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
         
-        <Logger name="com.netflix.eureka" level="debug" additivity="false">
+        <Logger name="org.hibernate" level="warn" additivity="false">
             <AppenderRef ref="RollingFileWarn"/>
         </Logger>
-        
         
         <root level="debug">
             <appender-ref ref="Console"/>
             <appender-ref ref="Filelog"/>
-            <appender-ref ref="RollingFileInfo"/>
-            <appender-ref ref="RollingFileWarn"/>
-            <appender-ref ref="RollingFileError"/>
+<!--            <appender-ref ref="RollingFileInfo"/>-->
+<!--            <appender-ref ref="RollingFileWarn"/>-->
+<!--            <appender-ref ref="RollingFileError"/>-->
         </root>
     
     </loggers>

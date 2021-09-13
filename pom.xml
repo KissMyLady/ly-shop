@@ -2,12 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     
+    <modelVersion>4.0.0</modelVersion>
     <groupId>top.mylady</groupId>
     <artifactId>le-shop</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    
     <modules>
         <module>ly-registry</module>
         <module>ly-gateway</module>
@@ -15,13 +16,15 @@
         <module>ly-common</module>
         <module>ly-auth</module>
         <module>ly-upload</module>
+        <module>ly-search</module>
     </modules>
     
     <!-- 继承Spring boot工程 -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.5.RELEASE</version> <!--2019 449-->
+<!--        <version>2.1.5.RELEASE</version> 2019 449-->
+        <version>2.3.12.RELEASE</version>
     </parent>
     
     <!--参考: https://github.com/KissMyLady/mylady-leadnews/blob/master/pom.xml-->
@@ -36,9 +39,14 @@
         <maven.compiler.target>11</maven.compiler.target>
         
         <!-- Spring全家桶 -->
-        <spring.boot.version>2.1.5.RELEASE</spring.boot.version>
-        <spring.boot.admin.version>2.1.6</spring.boot.admin.version>
-        <spring.cloud.version>Greenwich.RELEASE</spring.cloud.version>
+<!--        <spring.boot.version>2.1.5.RELEASE</spring.boot.version>-->
+<!--        <spring.boot.admin.version>2.1.6</spring.boot.admin.version>-->
+<!--        <spring.cloud.version>Greenwich.RELEASE</spring.cloud.version>-->
+        
+        <!--修改全家桶为最近的-->
+        <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
+        <spring.boot.admin.version>2.3.1</spring.boot.admin.version>
+        <spring.cloud.version>Hoxton.SR8</spring.cloud.version>
         <spring.jwt.version>1.1.1.RELEASE</spring.jwt.version>
         
         <!--数据库驱动-->
@@ -65,7 +73,9 @@
         
         <junit.version>4.12</junit.version>
         <searchbox.version>6.3.1</searchbox.version>
-        <elasticsearch.version>7.2.0</elasticsearch.version>
+        
+        <!--7.2.0 7.13.2 2021 jul -->
+        <elasticsearch.version>7.13.2</elasticsearch.version>
         <reflections.version>0.9.11</reflections.version>
     </properties>
     
