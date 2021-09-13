@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.mylady.item.service.CategoryService;
 import top.mylady.common.utils.dtos.ResponseResult;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.util.List;
 
 

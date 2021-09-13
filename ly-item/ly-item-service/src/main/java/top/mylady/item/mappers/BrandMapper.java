@@ -13,4 +13,9 @@ public interface BrandMapper {
 
     List<Brand> queryAll();
 
+    /**
+     * 品牌查询
+     */
+
+
 }
