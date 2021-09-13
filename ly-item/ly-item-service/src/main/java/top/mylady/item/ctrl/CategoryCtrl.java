@@ -9,6 +9,8 @@ import top.mylady.common.utils.dtos.ResponseResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/category")
@@ -25,6 +27,17 @@ public class CategoryCtrl {
     @GetMapping("/test")
     public ResponseResult testUser(){
         return categoryService.testUser();
+    }
+
+    /**
+     * 根据id查询分类
+     * params: /category/names?ids=1,2,3,4
+     * return形式:
+     * [ "图书、音像、电子书刊", "电子书刊", ]
+     */
+    @GetMapping("/names")
+    public ResponseEntity queryCategoryName(@RequestParam(value="ids") List<Long> ids){
+        return categoryService.queryByIds(ids);
     }
 
 }
