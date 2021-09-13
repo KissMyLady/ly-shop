@@ -14,17 +14,18 @@ import java.util.List;
 import java.util.Map;
 
 
+//数据实体类
 @Data
 @NoArgsConstructor   //注解在类上, 为类提供一个无参的构造方法
 @AllArgsConstructor  //使用后添加一个构造函数, 该构造函数含有所有已声明字段属性参数
 @ToString
-@Document(indexName="goods", shards=1, replicas=0)
+@Document(indexName="goods", shards=3, replicas=1)
 public class Goods {
 
     @Id
     private Long id;
 
-    @Field(type=FieldType.Text, analyzer="ik_max_word")
+    @Field(type=FieldType.Text)
     private String all;  //所有需要被搜索的信息
 
     @Field(type = FieldType.Keyword, index=false)
@@ -43,4 +44,5 @@ public class Goods {
     private String skus;  //List<sku> sku子信息集合
 
     private Map<String, Object> specs;  //可搜索的规格参数, key是参数名, 值是参数值
+
 }

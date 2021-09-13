@@ -26,7 +26,6 @@ public class ProductTest {
     public void createIndex(){
         try {
             elasticsearchRestTemplate.createIndex(Product.class);
-
         }
         catch (Exception e){
             System.out.println("错误, 原因e: "+ e);
