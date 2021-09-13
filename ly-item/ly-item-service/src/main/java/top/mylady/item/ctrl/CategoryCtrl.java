@@ -35,6 +35,8 @@ public class CategoryCtrl {
      */
     @GetMapping("/names")
     public ResponseEntity queryCategoryName(@RequestParam(value="ids") List<Long> ids){
+
+
         return categoryService.queryByIds(ids);
     }
 
