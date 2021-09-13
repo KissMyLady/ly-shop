@@ -11,5 +11,9 @@
         <result column="letter" property="letter"/>
         <result column="image" property="image"/>
     </resultMap>
+    
+    <select id="queryAll" resultMap="BaseResultMap">
+        select * from tb_brand
+    </select>
 
 </mapper>
