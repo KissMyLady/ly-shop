@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import top.mylady.common.utils.dtos.ResponseResult;
 import top.mylady.item.mappers.Goods_CategoryMapper;
 import top.mylady.item.mappers.User_UserMapper;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import top.mylady.item.pojo.Category;
 import top.mylady.item.pojo.User;
@@ -28,6 +31,30 @@ public class CategoryService {
 
     @Resource
     private Goods_CategoryMapper goods_categoryMapper;
+
+    /**
+     * ids查询品牌分类服务
+     */
+    public ResponseEntity queryByIds(List<Long> ids){
+        for (Long i : ids) {
+            if (i < 0L){
+                return new ResponseEntity<>("参数错误", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        try {
+            List<Category> categoryStringList = goods_categoryMapper.queryByIds(ids);
+            List<String> list = new ArrayList<>();
+            for (Category category: categoryStringList){
+                list.add(category.getName());
+            }
+            return ResponseEntity.ok(list);
+        }
+        catch (Exception e){
+            logger.warn("警告, 查询错误, 原因是: "+ e);
+            return new ResponseEntity<>(""+e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 
     /**
      * 查询商品分类, 返回相应

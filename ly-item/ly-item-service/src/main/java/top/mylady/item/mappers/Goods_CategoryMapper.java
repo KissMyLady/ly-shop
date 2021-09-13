@@ -8,4 +8,9 @@ public interface Goods_CategoryMapper {
 
     List<Category> selectByParentId(@Param("pid") Long pid);
 
+    /**
+     * 商品分类查询
+     */
+    List<Category> queryByIds(@Param("ids") List<Long> ids);
+
 }

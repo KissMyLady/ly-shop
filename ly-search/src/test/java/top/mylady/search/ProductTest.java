@@ -24,7 +24,14 @@ public class ProductTest {
      */
     @Test
     public void createIndex(){
-        elasticsearchRestTemplate.createIndex(Product.class);
+        try {
+            elasticsearchRestTemplate.createIndex(Product.class);
+
+        }
+        catch (Exception e){
+            System.out.println("错误, 原因e: "+ e);
+        }
+
         // 参考文章: https://blog.csdn.net/weixin_44257023/article/details/110148280
         System.out.println("创建索引成功");
     }

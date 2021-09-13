@@ -89,9 +89,9 @@
 <!--        </logger>-->
 <!--        -->
 
-<!--        <Logger name="com.netflix" level="off" additivity="false">-->
-<!--            <AppenderRef ref="Console"/>-->
-<!--        </Logger>-->
+        <Logger name="com.netflix" level="off" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
 
 <!--        <Logger name="org.hibernate" level="off" additivity="false">-->
 <!--            <AppenderRef ref="Console"/>-->
