@@ -1,4 +1,5 @@
 package top.mylady.item.service;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,20 @@ public class CategoryService {
             logger.warn("警告, 查询错误, 原因是: "+ e);
             return new ResponseEntity<>(""+e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public List<Category> queryCategoryListByPid(List<Long> ids) {
+        //查询的对象需要自己new出来，并将这个对象中的非空字段作为查询条件
+        logger.warn("queryCategoryListByPid 打印传递过来的ids: "+ ids);
+        List<Category> list;
+        try {
+            list = goods_categoryMapper.select(ids);
+        }
+        catch (Exception e){
+            System.out.println("错误, 原因e: "+ e);
+            return null;
+        }
+        return list;
     }
 
     /**

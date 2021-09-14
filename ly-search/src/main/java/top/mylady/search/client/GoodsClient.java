@@ -1,9 +1,11 @@
 package top.mylady.search.client;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.mylady.item.pojo.Brand;
+import top.mylady.item.pojo.Category;
 
 import java.util.List;
 
@@ -20,6 +22,11 @@ public interface GoodsClient {
     @GetMapping("/category/names")
     public abstract List<String> queryCategoryName(@RequestParam("ids") List<Long> ids);
 
+    /**
+     * Bug: 原接口这个是有bug, SQL语句有问题; 返回是空
+     */
+    @GetMapping("category/list/ids")
+    List<Category> queryCategoryByIds(@RequestParam("ids") List<Long> ids);
 
     /**
      * Brand查询

@@ -27,5 +27,13 @@
             </where>
     </select>
     
+    <!--存在 Bug-->
+    <select id="select" resultMap="BaseResultMap">
+        <foreach collection="ids" item="id">
+            SELECT * from tb_category WHERE id IN
+                (select category_id FROM tb_category_brand where brand_id = ${id} );
+        </foreach>
+        
+    </select>
 
 </mapper>

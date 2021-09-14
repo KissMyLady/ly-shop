@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import top.mylady.item.pojo.Category;
 import top.mylady.item.service.CategoryService;
 import top.mylady.common.utils.dtos.ResponseResult;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +17,19 @@ public class CategoryCtrl {
 
     @Autowired
     private CategoryService categoryService;
+    //ResponseEntity: 将toString的字符数据转化成json
 
     @GetMapping("/list")
     public ResponseEntity queryCategory(@RequestParam(value="pid", required = false) Long pid){
         return categoryService.queryCategoryByPid(pid);
+    }
+
+    /**
+     * TODO: Bug: SQL查询有问题, 需要纠正
+     */
+    @GetMapping("/list/ids")
+    public ResponseEntity<List<Category>> queryCategoryListByPid(@RequestParam("ids") List<Long> ids){
+        return ResponseEntity.ok(categoryService.queryCategoryListByPid(ids));
     }
 
     @GetMapping("/test")

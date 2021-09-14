@@ -13,4 +13,6 @@ public interface Goods_CategoryMapper {
      */
     List<Category> queryByIds(@Param("ids") List<Long> ids);
 
+    List<Category> select(@Param("ids") List<Long> ids);
+
 }

@@ -29,7 +29,10 @@ public class BrandsClientTest {
             List<Long> arr = new ArrayList<>();
             arr.add(1528L);
             arr.add(1912L);
+
             System.out.println(goodsClient.queryBrandsByIds(arr));
+            System.out.println(goodsClient.queryCategoryByIds(arr));
+
             System.out.println("pass");
         } catch (Exception e) {
             System.out.println("远程调用错误, 原因e: " + e);
