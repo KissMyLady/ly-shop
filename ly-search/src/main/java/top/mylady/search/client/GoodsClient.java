@@ -28,7 +28,8 @@ public interface GoodsClient {
     @GetMapping("category/list/ids")
     List<Category> queryCategoryByIds(@RequestParam("ids") List<Long> ids);
 
-    /**
+    /**":wq:wqa:
+     *:
      * Brand查询
      */
     @GetMapping("brand/{id}")
