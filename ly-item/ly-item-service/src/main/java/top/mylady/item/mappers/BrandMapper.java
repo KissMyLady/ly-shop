@@ -17,4 +17,7 @@ public interface BrandMapper {
      */
     Brand queryById(@Param("id")Long id);
 
+    List<Brand> queryByCid(@Param("cid")Long cid);
+
+    List<Brand> selectByIdList(@Param("ids")List<Long> ids);
 }

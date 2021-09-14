@@ -44,6 +44,24 @@ public class GoodsService {
     private BrandMapper brandMapper;
 
     /**
+     * 保存前端提交的form表单
+     */
+    public String saveGoods(Spu spu){
+
+        spu.getSkus().forEach((sku)->{
+            //新增sku
+
+            //新增库存
+
+            System.out.println("新增sku与库存完成");
+        });
+
+        System.out.println("保存前端提交的form表单完成");
+        return "ok";
+    }
+
+
+    /**
      * spu商品查询
      */
     public ResponseEntity querySpuByPage( Integer page,     Integer rows,

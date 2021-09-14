@@ -62,7 +62,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+    
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
         
         <!--参考: https://blog.csdn.net/u013600314/article/details/80583745-->
         <!-- jaxb模块引用 - start -->

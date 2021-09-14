@@ -21,4 +21,20 @@
         select * from tb_brand where id=#{id}
     </select>
     
+    <select id="queryByCid" resultMap="BaseResultMap">
+        select b.* from tb_brand as b
+            INNER JOIN  tb_category_brand as cb
+            on b.id = cb.brand_id
+            where cb.category_id = #{cid}
+    </select>
+    
+    <select id="selectByIdList" resultMap="BaseResultMap">
+        select * from tb_brand
+        <where>
+            <foreach collection="ids" open="id in(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    
 </mapper>

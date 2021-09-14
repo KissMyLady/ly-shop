@@ -1,4 +1,6 @@
 package top.mylady.item.service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import java.util.List;
 
 @Service
 public class SpecificationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(SpecificationService.class);
 
     @Resource
     private SpecMapper specMapper;
@@ -35,10 +39,19 @@ public class SpecificationService {
     /**
      * 规格参数查询
      */
-    public ResponseEntity queryParams(Long gid){
-        List<SpecParam> params = specMapper.queryParams(gid);
+    public ResponseEntity queryParams(Long gid, Long cid,   //cid: 商品分类id
+                                      Boolean generic,      //是否为通用属性
+                                      Boolean searching){   //是否搜索
+        List<SpecParam> params;
+        try {
+            params = specMapper.queryParams(gid, cid, generic, searching);
+        }
+        catch (Exception e){
+            logger.warn("规格参数查询错误, 原因e: "+ e);
+            params = null;
+        }
         if (CollectionUtils.isEmpty(params)){
-            return new ResponseEntity<>("无数据", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("无数据", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(params);
     }

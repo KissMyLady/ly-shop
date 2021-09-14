@@ -1,10 +1,9 @@
 package top.mylady.item.ctrl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import top.mylady.item.pojo.Spu;
 import top.mylady.item.service.GoodsService;
 
 
@@ -25,5 +24,11 @@ public class GoodsCtrl {
             @RequestParam(value="saleable", required=false)Boolean saleable,
             @RequestParam(value="key", required=false)String key){
         return goodsService.querySpuByPage(page, rows, saleable, key);
+    }
+
+    @PostMapping("/goods")
+    public ResponseEntity saveGoods(@RequestBody Spu spu){
+        String ok = this.goodsService.saveGoods(spu);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

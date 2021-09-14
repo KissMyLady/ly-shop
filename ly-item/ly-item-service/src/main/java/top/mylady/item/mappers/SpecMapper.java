@@ -13,7 +13,12 @@ public interface SpecMapper {
      */
     List<SpecGroup> queryByCid(@Param("cid")Long cid);
 
-    List<SpecParam> queryParams(@Param("gid")Long gid);
+    List<SpecParam> queryParams(@Param("gid")Long gid,
+                                @Param("cid")Long cid,
+                                @Param("generic")Boolean generic,
+                                @Param("searching")Boolean searching
+
+    );
 
 }
 

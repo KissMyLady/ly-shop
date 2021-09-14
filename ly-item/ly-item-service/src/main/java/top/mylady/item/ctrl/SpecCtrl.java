@@ -24,8 +24,13 @@ public class SpecCtrl {
      * 规格查询
      */
     @GetMapping("/params")
-    public ResponseEntity queryParams(@RequestParam("gid") Long gid){
-        return this.specificationService.queryParams(gid);
+    public ResponseEntity queryParams(
+            @RequestParam(value="gid", required=true) Long gid,
+            @RequestParam(value="cid", required=false) Long cid,
+            @RequestParam(value="generic", required=false) Boolean generic,
+            @RequestParam(value="searching", required=false) Boolean searching
+    ){
+        return this.specificationService.queryParams(gid, cid, generic, searching);
     }
 
 }
