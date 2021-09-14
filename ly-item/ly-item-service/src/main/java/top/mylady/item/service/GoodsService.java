@@ -10,17 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import top.mylady.common.vo.PageResult;
-import top.mylady.item.mappers.BrandMapper;
-import top.mylady.item.mappers.Goods_CategoryMapper;
-import top.mylady.item.mappers.SpuMapper;
-import top.mylady.item.pojo.Brand;
-import top.mylady.item.pojo.Category;
-import top.mylady.item.pojo.Spu;
+import top.mylady.item.mappers.*;
+import top.mylady.item.pojo.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -53,7 +48,7 @@ public class GoodsService {
 
             //新增库存
 
-            System.out.println("新增sku与库存完成");
+            System.out.println("仅提供保存思路, 新增sku与库存模拟完成");
         });
 
         System.out.println("保存前端提交的form表单完成");
@@ -150,5 +145,72 @@ public class GoodsService {
             list.add(category.getName());
         }
         return list;
+    }
+
+    @Resource
+    private SkuMapper skuMapper;
+
+    @Resource
+    private StockMapper stockMapper;
+
+    public List<Sku> querySkuBySpuId(Long spuId) {
+
+        List<Sku> skuList;
+        /*
+         * 获取的这个字段未转json
+         * "ownSpec": "{\"4\":\"粉\",\"12\":\"4GB\",\"13\":\"32GB\"}",
+         */
+        //查询sku
+        try {
+            skuList = skuMapper.select(spuId);
+        }
+        catch (Exception e){
+            logger.warn("查询sku列表错误, 原因e, 这是最核心的查询数据都没有查询到, 所以直接return空数据: "+ e);
+            return null;
+        }
+
+        //查询库存
+        //List<Long> ids = skuList.stream().map(Sku::getId).collect(Collectors.toList());
+        List<Long> ids = new ArrayList<>();
+        for (Sku sku: skuList) {
+            ids.add(sku.getId());
+        }
+
+        List<Stock> stockList = null;
+        try {
+           stockList = stockMapper.selectByIdList(ids);
+        }
+        catch (Exception e){
+            logger.warn("库缓存查询错误, 原因e, 不是核心数据, 当前数据集为空, 不return"+ e);
+        }
+
+        //把stock变成一个map，其key：skuId,值：库存值
+        if (stockList != null){
+            Map<Long, Integer> stockMap = new HashMap<>();
+
+//            stockMap = stockList.stream().collect(
+//                    Collectors.toMap(
+//                            Stock::getSkuId,
+//                            Stock::getStock
+//                    )
+//            );
+//            skuList.forEach(s ->s.setStock(stockMap.get(s.getId())));
+
+            stockList.forEach((stock)->{
+                stockMap.put(stock.getSkuId(), stock.getStock());
+            });
+
+            skuList.forEach((sku)->{
+                Long skuId = sku.getId();               //获取到sku的id
+                Integer skuStock = stockMap.get(skuId); //获取到库存
+                sku.setStock(skuStock);                 //将库存赋值给对象
+            });
+
+        }else {
+            logger.warn("警告 skuList 添加库存失败. 不是核心数据, 当前数据集为空, 不return");
+        }
+
+        logger.info("查询skuList数据完毕, 返回处理后的skuList数据");
+        return skuList;
     }
 }

@@ -21,30 +21,26 @@
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
         </File>
         
-        <!--这个输出控制台的配置-->
+        <!--控制台-->
         <console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${default}"/> <!--输出日志的格式 -->
-            <!--控制台只输出level及其以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
         </console>
         
-        <!-- 这个会打印出所有的info及以下级别的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <!--Info-->
         <RollingFile name="RollingFileInfo"
                      fileName="${FILE_PATH}/info.log"
                      filePattern="${FILE_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}_%i.log">
-            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${default}"/>
             <Policies>
-                <!--interval属性用来指定多久滚动一次，默认是1 hour-->
                 <TimeBasedTriggeringPolicy interval="1"/>
                 <SizeBasedTriggeringPolicy size="10MB"/>
             </Policies>
-            <!-- DefaultRolloverStrategy属性如不设置，则默认为最多同一文件夹下7个文件开始覆盖-->
             <DefaultRolloverStrategy max="15"/>
         </RollingFile>
         
-        <!-- 这个会打印出所有的warn及以下级别的信息-->
+        <!--Warn-->
         <RollingFile name="RollingFileWarn" fileName="${FILE_PATH}/warn.log"
                      filePattern="${FILE_PATH}/${FILE_NAME}-WARN-%d{yyyy-MM-dd}_%i.log">
             <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
@@ -56,7 +52,7 @@
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
         
-        <!-- 这个会打印出所有的error及以下级别的信息-->
+        <!--Error-->
         <RollingFile name="RollingFileError" fileName="${FILE_PATH}/error.log"
                      filePattern="${FILE_PATH}/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}_%i.log">
             <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>

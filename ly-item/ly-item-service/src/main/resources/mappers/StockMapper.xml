@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--Category 商品类别查询-->
+<mapper namespace="top.mylady.item.mappers.StockMapper">
+    
+    <resultMap id="BaseResultMap" type="top.mylady.item.pojo.Stock">
+        <id column="sku_id" property="skuId"/>
+        
+        <result column="seckill_stock" property="seckillStock"/>
+        <result column="seckill_total" property="seckillTotal"/>
+        <result column="stock" property="stock"/>
+    </resultMap>
+    
+    
+    <select id="selectByIdList" resultMap="BaseResultMap">
+        select * from tb_stock
+        <where>
+            <foreach collection="ids" open="sku_id in(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+    
+</mapper>

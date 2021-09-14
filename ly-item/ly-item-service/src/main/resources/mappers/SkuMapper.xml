@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--Category 商品类别查询-->
+<mapper namespace="top.mylady.item.mappers.SkuMapper">
+    
+    <resultMap id="BaseResultMap" type="top.mylady.item.pojo.Sku">
+        <id column="id" property="id"/>
+        <result column="spu_id" property="spuId"/>
+        <result column="title" property="title"/>
+        <result column="images" property="images"/>
+        <result column="price" property="price"/>
+    
+        <result column="own_spec" property="ownSpec"/>
+        <result column="indexes" property="indexes"/>
+        <result column="enable" property="enable"/>
+        <result column="create_time" property="createTime"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
+        <result column="stock" property="stock"/>
+    </resultMap>
+    
+    <select id="select" resultMap="BaseResultMap">
+        select * from tb_sku where spu_id = #{spuId}
+    </select>
+    
+</mapper>
