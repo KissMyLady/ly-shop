@@ -73,7 +73,7 @@ public class GoodsDataAdd {
             //遍历查询到的spu
             pageResult.getItems().forEach( (item) ->{
                 try {
-                    System.out.println("打印遍历的item Spu: "+ item + "\r\n");
+                    //System.out.println("打印遍历的item Spu: "+ item + "\r\n");
                     //执行
                     Goods goods = this.insertEsService.buildGoods((Spu)item);
                     goodsList.add(goods);

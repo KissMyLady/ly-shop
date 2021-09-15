@@ -46,7 +46,7 @@
     <resultMap id="SpuResult" type="top.mylady.item.pojo.SpuDetail">
         <id column="spu_id" property="spuId"/>
         <result column="description" property="description"/>
-        <result column="specialSpec" property="specialSpec"/>
+        <result column="special_spec" property="specialSpec"/>
         <result column="generic_spec" property="genericSpec"/>
         <result column="packing_list" property="packingList"/>
         <result column="after_service" property="afterService"/>
