@@ -1,11 +1,11 @@
 package top.mylady.item.ctrl;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import top.mylady.item.pojo.Sku;
 import top.mylady.item.pojo.Spu;
+import top.mylady.item.pojo.SpuDetail;
 import top.mylady.item.service.GoodsService;
 
 import java.util.List;
@@ -42,6 +42,11 @@ public class GoodsCtrl {
     @GetMapping("/sku/list")
     public ResponseEntity<List<Sku>> querySkuBySpuId(@RequestParam("id") Long id){
         return ResponseEntity.ok(goodsService.querySkuBySpuId(id));
+    }
+
+    @GetMapping("/spu/detail/{id}")
+    public ResponseEntity<SpuDetail> querySpuDetailById(@PathVariable("id")Long id){
+        return ResponseEntity.ok(goodsService.queryDetailById(id));
     }
 
 }

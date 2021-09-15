@@ -1,6 +1,7 @@
 package top.mylady.search.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public interface GoodsClient {
     public abstract List<String> queryCategoryName(@RequestParam("ids") List<Long> ids);
 
     /**
-     * Bug: 原接口这个是有bug, SQL语句有问题; 返回是空
+     * 查询商品分类
      */
     @GetMapping("/category/list/ids")
     List<Category> queryCategoryByIds(@RequestParam("ids") List<Long> ids);
@@ -38,16 +39,24 @@ public interface GoodsClient {
     @GetMapping("/brand/list")
     List<Brand> queryBrandsByIds(@RequestParam("ids") List<Long> ids);
 
-
+    /**
+     * 规格查询 升级Plush版
+     */
     @GetMapping("/spec/params")
-    List<SpecParam> querySpecParams(@RequestParam(value="gid",      required=false) Long gid,
-                                    @RequestParam(value="cid",      required=false) Long cid,
-                                    @RequestParam(value="searching",required=false )Boolean searching);
+    List<SpecParam> querySpecParams(
+            @RequestParam(value="gid",       required=false)Long gid,
+            @RequestParam(value="cid",       required=false)Long cid,
+            @RequestParam(value="searching", required=false)Boolean searching);
+
+//    @GetMapping("/spec/params")
+//    List<SpecParam> querySpecParams(@RequestParam(value="gid",      required=false) Long gid,
+//                                    @RequestParam(value="cid",      required=false) Long cid,
+//                                    @RequestParam(value="searching",required=false )Boolean searching);
 
     @GetMapping("/spu/detail/{id}")
     SpuDetail querySpuDetailById(@PathVariable("id")Long id);
 
-    @GetMapping("//spu/page")
+    @GetMapping("/spu/page")
     PageResult<Spu> querySpuByPage(
             @RequestParam(value="page",     defaultValue="1") Integer page,
             @RequestParam(value="rows",     defaultValue="5") Integer rows,
@@ -57,5 +66,4 @@ public interface GoodsClient {
 
     @GetMapping("/sku/list")
     List<Sku> querySkuBySpuId(@RequestParam("id") Long spuId);
-
 }

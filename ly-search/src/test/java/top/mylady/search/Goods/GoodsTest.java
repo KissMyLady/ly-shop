@@ -26,7 +26,7 @@ public class GoodsTest {
     public void createIndex(){
         try {
             elasticsearchRestTemplate.createIndex(Goods.class);
-            elasticsearchRestTemplate.putMapping(Goods.class);
+            //elasticsearchRestTemplate.putMapping(Goods.class);
         }
         catch (Exception e){
             System.out.println("创建索引错误, 原因e: "+ e);

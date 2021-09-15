@@ -74,18 +74,19 @@ public class CategoryService {
         }
     }
 
+    /**
+     * 查询商品分类
+     */
     public List<Category> queryCategoryListByPid(List<Long> ids) {
-        //查询的对象需要自己new出来，并将这个对象中的非空字段作为查询条件
-        logger.warn("queryCategoryListByPid 打印传递过来的ids: "+ ids);
-        List<Category> list;
+        List<Category> categories = null;
+
         try {
-            list = goods_categoryMapper.select(ids);
+            categories = goods_categoryMapper.select(ids);
         }
         catch (Exception e){
-            System.out.println("错误, 原因e: "+ e);
-            return null;
+            logger.warn("循环查询错误, 原因e: "+ e);
         }
-        return list;
+        return categories;
     }
 
     /**

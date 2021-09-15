@@ -27,13 +27,25 @@
             </where>
     </select>
     
-    <!--存在 Bug-->
+    <!--通过cid1, cid2, cid3 查询商品分类-->
     <select id="select" resultMap="BaseResultMap">
-        <foreach collection="ids" item="id">
-            SELECT * from tb_category WHERE id IN
-                (select category_id FROM tb_category_brand where brand_id = ${id} );
-        </foreach>
-        
+         select * from tb_category
+        <where>
+            <foreach collection="cids" open="id in(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+
     </select>
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </mapper>

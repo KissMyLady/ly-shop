@@ -1,4 +1,6 @@
 package top.mylady.item.ctrl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryCtrl {
 
+    private static final Logger logger = LoggerFactory.getLogger(CategoryCtrl.class);
+
     @Autowired
     private CategoryService categoryService;
     //ResponseEntity: 将toString的字符数据转化成json
@@ -25,7 +29,7 @@ public class CategoryCtrl {
     }
 
     /**
-     * TODO: Bug: SQL查询有问题, 需要纠正
+     * 根据商品分类cid列表查询商品分类集合 cid1, cid2, cid3 这样查询
      */
     @GetMapping("/list/ids")
     public ResponseEntity<List<Category>> queryCategoryListByPid(@RequestParam("ids") List<Long> ids){
@@ -45,8 +49,6 @@ public class CategoryCtrl {
      */
     @GetMapping("/names")
     public ResponseEntity queryCategoryName(@RequestParam(value="ids") List<Long> ids){
-
-
         return categoryService.queryByIds(ids);
     }
 

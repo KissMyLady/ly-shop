@@ -5,12 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-
 import top.mylady.common.vo.PageResult;
 import top.mylady.item.pojo.Spu;
 import top.mylady.search.client.GoodsClient;
@@ -35,8 +34,23 @@ public class GoodsDataAdd {
     @Autowired
     private GoodsClient goodsClient;
 
+    @Autowired
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
+
     @Resource
     private GoodsDao goodsDao;
+
+    @Test
+    public void createIndex(){
+        try {
+            elasticsearchRestTemplate.createIndex(Goods.class);
+            //elasticsearchRestTemplate.putMapping(Goods.class);
+        }
+        catch (Exception e){
+            System.out.println("错误, 原因e: "+ e);
+        }
+        System.out.println("创建索引成功");
+    }
 
     /**
      * 需要启动的服务:
@@ -45,6 +59,8 @@ public class GoodsDataAdd {
      */
     @Test
     public void insertDataToEs(){
+        this.createIndex();
+
         Integer rows = 100;
         Integer page = 1;
         logger.debug("开始插入数据到 ElasticSearch >>>>>>>>>>>>");
@@ -57,6 +73,7 @@ public class GoodsDataAdd {
             //遍历查询到的spu
             pageResult.getItems().forEach( (item) ->{
                 try {
+                    System.out.println("打印遍历的item Spu: "+ item + "\r\n");
                     //执行
                     Goods goods = this.insertEsService.buildGoods((Spu)item);
                     goodsList.add(goods);

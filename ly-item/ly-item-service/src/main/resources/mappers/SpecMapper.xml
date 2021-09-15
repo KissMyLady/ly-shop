@@ -34,5 +34,21 @@
     <select id="queryParams" resultMap="SpecParamMap">
         select * from tb_spec_param where generic = #{gid}
     </select>
+    
+    <select id="querySpecParams" resultMap="SpecParamMap">
+        select * from tb_spec_param
+
+        <if test="cid">
+            where cid = #{cid}
+        </if>
+        
+        <if test="gid">
+            where group_id = #{gid}
+        </if>
+        
+        <if test="flag">
+            where searching = #{flag}
+        </if>
+    </select>
 
 </mapper>

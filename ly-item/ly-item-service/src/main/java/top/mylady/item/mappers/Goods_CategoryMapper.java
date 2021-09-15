@@ -13,6 +13,7 @@ public interface Goods_CategoryMapper {
      */
     List<Category> queryByIds(@Param("ids") List<Long> ids);
 
-    List<Category> select(@Param("ids") List<Long> ids);
+    //根据cid1, cid2, cid3 查询商品分类
+    List<Category> select(@Param("cids") List<Long> ids);
 
 }

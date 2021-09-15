@@ -213,4 +213,18 @@ public class GoodsService {
         logger.info("查询skuList数据完毕, 返回处理后的skuList数据");
         return skuList;
     }
+
+    /**
+     * 查询 tb_spu_detail 的详情信息
+     */
+    public SpuDetail queryDetailById(Long spuId) {
+        try {
+            SpuDetail spuDetail = spuMapper.selectByPrimaryKey(spuId);
+            return spuDetail;
+        }
+        catch (Exception e){
+            logger.warn("错误, 原因e: "+ e);
+            return null;
+        }
+    }
 }

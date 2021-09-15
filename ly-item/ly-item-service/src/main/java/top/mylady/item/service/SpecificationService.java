@@ -56,4 +56,27 @@ public class SpecificationService {
         return ResponseEntity.ok(params);
     }
 
+    /**
+     * 查询指定规格参数 ok
+     */
+    public List<SpecParam> querySpecParams(Long gid, Long cid, Boolean searching) {
+
+        Integer flag;
+        if (searching == null){
+            flag = null;
+        }else if (searching == false){
+            flag = 0;
+        }else {
+            flag = 1;
+        }
+
+        try {
+            return specMapper.querySpecParams(gid, cid, flag);
+        }
+        catch (Exception e){
+            logger.warn("错误, 原因e: "+ e);
+            return null;
+        }
+    }
+
 }

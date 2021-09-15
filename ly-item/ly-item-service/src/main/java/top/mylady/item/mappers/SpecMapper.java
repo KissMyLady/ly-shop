@@ -16,9 +16,12 @@ public interface SpecMapper {
     List<SpecParam> queryParams(@Param("gid")Long gid,
                                 @Param("cid")Long cid,
                                 @Param("generic")Boolean generic,
-                                @Param("searching")Boolean searching
+                                @Param("searching")Boolean searching);
 
-    );
+    //查询指定规格参数
+    List<SpecParam> querySpecParams(@Param("gid")Long gid,
+                                    @Param("cid")Long cid,
+                                    @Param("flag")Integer flag);
 
 }
 

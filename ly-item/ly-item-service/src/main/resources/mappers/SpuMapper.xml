@@ -41,11 +41,24 @@
     
         <result column="cname" property="cname"/>
         <result column="bname" property="bname"/>
-        
     </resultMap>
+    
+    <resultMap id="SpuResult" type="top.mylady.item.pojo.SpuDetail">
+        <id column="spu_id" property="spuId"/>
+        <result column="description" property="description"/>
+        <result column="specialSpec" property="specialSpec"/>
+        <result column="generic_spec" property="genericSpec"/>
+        <result column="packing_list" property="packingList"/>
+        <result column="after_service" property="afterService"/>
+    </resultMap>
+    
     
     <select id="querySpu" resultMap="BaseResultMap">
         select * from tb_spu where saleable = #{saleableFlag}
+    </select>
+    
+    <select id="selectByPrimaryKey" resultMap="SpuResult">
+        select * from tb_spu_detail where spu_id = #{spuId}
     </select>
 
 </mapper>
