@@ -23,19 +23,16 @@ public class BrandCtrl {
 
     @GetMapping("/{id}")
     public ResponseEntity<Brand> queryBrandById(@PathVariable("id")Long id){
-        logger.info("{id}查询");
         return ResponseEntity.ok(brandService.queryById(id));
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<Brand>> queryBrandsByIds(@RequestParam("ids")List<Long> ids){
-        logger.info("list查询");
         return ResponseEntity.ok(brandService.queryBrandsByIds(ids));
     }
 
     @GetMapping("/cid/{cid}")
     public ResponseEntity queryBrandsByCid(@PathVariable("cid")Long cid){
-        logger.info("/cid/{cid}查询");
         List<Brand> brands = this.brandService.queryBrandsByCid(cid);
         if (CollectionUtils.isEmpty(brands)){
             return new ResponseEntity<>("数据不存在", HttpStatus.NOT_FOUND);

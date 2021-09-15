@@ -199,10 +199,9 @@ public class InsertEsService {
 
                     value = (value == null ? "其他" : value);
                     specs.put(key, value);
-
-                    System.out.println("specs数据填充完成, "+ numbers);
                     numbers ++;
                 }
+                System.out.println("specs数据填充完成, "+ numbers);
             }
             catch (Exception e){
                 logger.warn("params解析错误, 原因e: "+ e);

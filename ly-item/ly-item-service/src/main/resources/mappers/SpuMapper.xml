@@ -31,13 +31,13 @@
         <result column="cid3" property="cid3"/>
     
         <result column="title" property="title"/>
-        <result column="subTitle" property="subTitle"/>
+        <result column="sub_title" property="subTitle"/>
         <result column="saleable" property="saleable"/>
     
         <result column="valid" property="valid"/>
-        <result column="createTime" property="createTime"/>
+        <result column="create_time" property="createTime"/>
         
-        <result column="lastUpdateTime" property="lastUpdateTime"/>
+        <result column="last_update_time" property="lastUpdateTime"/>
     
         <result column="cname" property="cname"/>
         <result column="bname" property="bname"/>

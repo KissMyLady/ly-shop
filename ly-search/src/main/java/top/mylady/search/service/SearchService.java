@@ -35,6 +35,10 @@ public class SearchService {
 
     /**
      * 关键字搜索服务
+     * {
+     *     "key": "手机",
+     *     "page": "1"
+     * }
      */
     public PageResult<Goods> search(SearchRequest reuqest){
 
