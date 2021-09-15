@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="top.mylady.item.mappers.SpecMapper">
+    
+    <resultMap id="BaseResultMap" type="top.mylady.item.pojo.SpecGroup">
+        <id column="id" property="id"/>
+        <result column="cid" property="cid"/>
+        <result column="name" property="name"/>
+    </resultMap>
+    
+    <resultMap id="SpecParamMap" type="top.mylady.item.pojo.SpecParam">
+        <id column="id" property="id"/>
+        <result column="cid" property="cid"/>
+        <result column="groupId" property="groupId"/>
+        <result column="name" property="name"/>
+    
+        <result column="numeric" property="numeric"/>
+        <result column="unit" property="unit"/>
+        <result column="generic" property="generic"/>
+        <result column="searching" property="searching"/>
+        <result column="segments" property="segments"/>
+    </resultMap>
+    
+    
+    <!--组查询-->
+    <select id="queryByCid" resultMap="BaseResultMap">
+        select * from tb_spec_group where cid = #{cid}
+    </select>
+    
+    <!--规格参数-->
+    <select id="queryParams" resultMap="SpecParamMap">
+        select * from tb_spec_param where generic = #{gid}
+    </select>
+    
+    <select id="querySpecParams" resultMap="SpecParamMap">
+        select * from tb_spec_param
+
+        <if test="cid">
+            where cid = #{cid}
+        </if>
+        
+        <if test="gid">
+            where group_id = #{gid}
+        </if>
+        
+        <if test="flag">
+            where searching = #{flag}
+        </if>
+    </select>
+
+</mapper>

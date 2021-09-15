@@ -1,14 +1,12 @@
 package top.mylady.search.service;
-import org.springframework.stereotype.Service;
+import top.mylady.item.pojo.Category;
+import java.util.List;
 
 
 /**
- * 将Mysql 转换到 Es
+ * ElasticSearch搜索功能实现
  */
-@Service
 public class SearchService {
-
-
 
 
 }

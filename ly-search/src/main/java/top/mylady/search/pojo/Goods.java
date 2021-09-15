@@ -12,6 +12,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 //数据实体类
@@ -38,7 +39,8 @@ public class Goods {
 
     private Date createTime;
 
-    private List<Long> price;  //SPU下, 全部sku信息
+    //// 价格，对应到elasticsearch/json中是数组，一个spu有多个sku，就有多个价格
+    private Set<Long> price;  //SPU下, 全部sku信息
 
     @Field(type = FieldType.Keyword, index=false)
     private String skus;  //List<sku> sku子信息集合

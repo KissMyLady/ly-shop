@@ -1,4 +1,7 @@
 package top.mylady.item.mappers;
+import org.apache.ibatis.annotations.Param;
+import top.mylady.item.pojo.Brand;
+import java.util.List;
 
 
 /**
@@ -7,5 +10,14 @@ package top.mylady.item.mappers;
 public interface BrandMapper {
 
 
+    List<Brand> queryAll();
 
+    /**
+     * 品牌查询
+     */
+    Brand queryById(@Param("id")Long id);
+
+    List<Brand> queryByCid(@Param("cid")Long cid);
+
+    List<Brand> selectByIdList(@Param("ids")List<Long> ids);
 }

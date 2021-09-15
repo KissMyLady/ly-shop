@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="top.mylady.item.mappers.SpuMapper">
+    
+    <resultMap id="SkuMap" type="top.mylady.item.pojo.Sku">
+        <id column="id" property="id"/>
+        <result column="spuId" property="spuId"/>
+        <result column="title" property="title"/>
+        <result column="images" property="images"/>
+        <result column="price" property="price"/>
+    
+        <result column="ownSpec" property="ownSpec"/>
+        <result column="indexes" property="indexes"/>
+        <result column="enable" property="enable"/>
+        <result column="price" property="price"/>
+        <result column="createTime" property="createTime"/>
+        <result column="lastUpdateTime" property="lastUpdateTime"/>
+        <result column="stock" property="stock"/>
+    </resultMap>
+    
+    
+    <resultMap id="BaseResultMap" type="top.mylady.item.pojo.Spu">
+        <id column="id" property="id"/>
+        
+        <result column="brand_id" property="brandId"/>
+        <result column="cid1" property="cid1"/>
+        <result column="cid2" property="cid2"/>
+        <result column="cid3" property="cid3"/>
+    
+        <result column="title" property="title"/>
+        <result column="subTitle" property="subTitle"/>
+        <result column="saleable" property="saleable"/>
+    
+        <result column="valid" property="valid"/>
+        <result column="createTime" property="createTime"/>
+        
+        <result column="lastUpdateTime" property="lastUpdateTime"/>
+    
+        <result column="cname" property="cname"/>
+        <result column="bname" property="bname"/>
+    </resultMap>
+    
+    <resultMap id="SpuResult" type="top.mylady.item.pojo.SpuDetail">
+        <id column="spu_id" property="spuId"/>
+        <result column="description" property="description"/>
+        <result column="specialSpec" property="specialSpec"/>
+        <result column="generic_spec" property="genericSpec"/>
+        <result column="packing_list" property="packingList"/>
+        <result column="after_service" property="afterService"/>
+    </resultMap>
+    
+    
+    <select id="querySpu" resultMap="BaseResultMap">
+        select * from tb_spu where saleable = #{saleableFlag}
+    </select>
+    
+    <select id="selectByPrimaryKey" resultMap="SpuResult">
+        select * from tb_spu_detail where spu_id = #{spuId}
+    </select>
+
+</mapper>

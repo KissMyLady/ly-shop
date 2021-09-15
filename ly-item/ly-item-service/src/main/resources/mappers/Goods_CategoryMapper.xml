@@ -27,5 +27,25 @@
             </where>
     </select>
     
+    <!--通过cid1, cid2, cid3 查询商品分类-->
+    <select id="select" resultMap="BaseResultMap">
+         select * from tb_category
+        <where>
+            <foreach collection="cids" open="id in(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
 
+    </select>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </mapper>
