@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
@@ -51,9 +50,6 @@ public class AggsSearchResult {
     @Autowired
     private GoodsClient goodsClient;
 
-    @Autowired
-    private ElasticsearchRestTemplate elasticsearchRestTemplate;
-
     /**
      * 升级版 集合搜索服务
      */
@@ -65,6 +61,20 @@ public class AggsSearchResult {
 
         //1; 创建自定义查询构建器
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+
+        BoolQueryBuilder boolQueryBuilder = null;
+
+        //升级版, 过滤型
+        if ( !CollectionUtils.isEmpty(request.getFilter())){
+            logger.info("打印request.getFilter(): "+ request.getFilter());
+            try {
+                boolQueryBuilder = this.buildBooleanBuilder(request);
+                queryBuilder.withQuery(boolQueryBuilder);
+            }
+            catch (Exception e){
+                logger.warn("升级版, 过滤型错误, 原因e: "+ e);
+            }
+        }
 
         //添加查询条件
         queryBuilder.withQuery(QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND));
@@ -125,11 +135,13 @@ public class AggsSearchResult {
             logger.info("判断分类的个数, 如果是1个则进行规格聚合, 进行聚合 >> ");
             Long id = (Long)categories.get(0).get("id");
             try {
-                specs = this.buildSpecificationAgg(id, baseQuery);
+                //specs = this.buildSpecificationAgg(id, baseQuery);       //这个可取消注释
+                specs = this.buildSpecificationAgg(id, boolQueryBuilder);
             }
             catch (Exception e){
                 logger.warn("规格聚合错误, 原因e: "+ e);
             }
+
         }
 
         //封装, 返回结果
@@ -137,7 +149,7 @@ public class AggsSearchResult {
         Long        total = goodsPageResult.getTotalElements();
         Integer totalPage = goodsPageResult.getTotalPages();
 
-        logger.info("封装, 数据返回");
+        logger.info("数据组装, 返回");
 
         return new SearchResult(
                 items, total, totalPage,
@@ -146,8 +158,6 @@ public class AggsSearchResult {
 
     //品牌解析
     private List<Brand> getBrandAggResult(Aggregation aggregation){
-        logger.info("getBrandAggResult 品牌解析 >>> ");
-
         //处理集合结果集
         Terms terms;
         try {
@@ -162,7 +172,6 @@ public class AggsSearchResult {
         List<Brand> brands = new ArrayList<>();
         //List<?> buckets = terms.getBuckets();
 
-        logger.info("品牌解析, for循环遍历bucket ");
         for (Terms.Bucket bucket: terms.getBuckets()) {
             Long brandId = bucket.getKeyAsNumber().longValue();
             //logger.info("查询到brandId, 打印: 开始查询品牌信息, 添加到列表返回"+ brandId);
@@ -210,7 +219,7 @@ public class AggsSearchResult {
             logger.warn("names查询为空, 返回null");
             return null;
         }
-        logger.info("names查询不为空, 打印names: "+ names);
+        //logger.info("names查询不为空, 打印names: "+ names);
 
         for (int i = 0; i< cids.size(); i++) {
             Map<String, Object> map = new HashMap<>();
@@ -229,6 +238,9 @@ public class AggsSearchResult {
         return null;
     }
 
+    /**
+     * Params 过虑, baseQuery: 查询条件
+     */
     private QueryBuilder buildBaseQuery(SearchRequest request){
 
         //创建布尔查询
@@ -241,7 +253,7 @@ public class AggsSearchResult {
         Map<String, String> map = request.getFilter();
 
         if (map == null){
-            logger.warn("警告 遍历map 集合, 为空值, 返回null");
+            logger.warn("警告 buildBaseQuery 遍历map 集合, 为空值, 返回null");
             return null;
         }
         logger.info("打印需要遍历过虑条件参数map: "+ map);
@@ -258,6 +270,44 @@ public class AggsSearchResult {
             queryBuilder.filter(QueryBuilders.termQuery(key, value));
         }
         return queryBuilder;
+    }
+
+
+    /**
+     * 过虑方法
+     * bool查询 构建器
+     */
+    public BoolQueryBuilder buildBooleanBuilder(SearchRequest request){
+        logger.info("过虑方法 bool查询 构建器 方法内部 >> ");
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
+        //添加基本查询条件
+        boolQueryBuilder.must(QueryBuilders.matchQuery("all", request.getKey()).operator(Operator.AND));
+
+        //添加过虑条件
+        if(CollectionUtils.isEmpty(request.getFilter())){
+            logger.info("过虑条件为空");
+            return boolQueryBuilder;
+        }
+
+        Map<String, String> filter = request.getFilter();
+        for(Map.Entry<String, String> f: filter.entrySet()){
+            String key = f.getKey();
+            //如果过滤条件是 品牌, 过虑的字段名: brandId
+            logger.info("如果过滤条件是 品牌, 过虑的字段名: brandId, 打印传递过来的key: "+ key);
+
+            if (StringUtils.equals("品牌", key)){
+                key = "brandId";
+            }else if (StringUtils.equals("分类", key)){
+                key = "cid3";
+            }else {
+                //如果是规格, 过滤字段名: specs.key.keyword
+                key = "specs."+ key+ ".keyword";
+            }
+            boolQueryBuilder.filter(QueryBuilders.termQuery(key, f.getValue()));
+        }
+        logger.info("返回过滤的boolQueryBuilder对象");
+        return boolQueryBuilder;
     }
 
     /**
