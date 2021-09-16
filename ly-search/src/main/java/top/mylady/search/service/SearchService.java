@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * ElasticSearch搜索功能实现
+ * 简单实现, 通过传入 key 关键字, 实现搜索
  */
 @Service
 public class SearchService {

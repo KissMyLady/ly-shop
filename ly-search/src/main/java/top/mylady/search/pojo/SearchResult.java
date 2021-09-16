@@ -17,28 +17,56 @@ public class SearchResult extends PageResult<Goods> {
     //扩展品牌集合
     private List<Brand> brands;
 
-    /**
-     * 四个类重载方法
-     */
-    public SearchResult(){};
+    //新增参数 保存规格参数过虑条件
+    private List<Map<String, Object>> specs;
 
-    public SearchResult(List<Map<String, Object>> categories, List<Brand> brands){
+    public void __init__(List<Goods> items,
+                         Long total,
+                         Integer totalPage,
+                         List<Map<String, Object>> categories, List<Brand> brands,
+                         List<Map<String, Object>> specs){
+        super.total = total;
+        super.totalPage = totalPage;
+        super.items = items;
+
         this.categories = categories;
         this.brands = brands;
+        this.specs = specs;
     }
 
-    public SearchResult(List<Goods> items, Long total,
-                        List<Map<String, Object>> categories, List<Brand> brands){
+    public SearchResult(){};
+
+    //类重载
+    public SearchResult(List<Map<String, Object>> categories,
+                        List<Brand> brands,
+                        List<Map<String, Object>> specs){
+        this.categories = categories;
+        this.brands = brands;
+        this.specs = specs;
+    }
+
+    //类重载
+    public SearchResult(List<Goods> items,
+                        Long total,
+                        List<Map<String, Object>> categories,
+                        List<Brand> brands,
+                        List<Map<String, Object>> specs){
         super(total, items);
         this.categories = categories;
         this.brands = brands;
+        this.specs = specs;
     }
 
-    public SearchResult(List<Goods> items, Long total, Integer totalPage,
-                        List<Map<String, Object>> categories, List<Brand> brands){
+    //类重载
+    public SearchResult(List<Goods> items,
+                        Long total,
+                        Integer totalPage,
+                        List<Map<String, Object>> categories, List<Brand> brands,
+                        List<Map<String, Object>> specs){
         super(total, totalPage, items);
         this.categories = categories;
         this.brands = brands;
+        this.specs = specs;
     }
 
     /**
@@ -60,4 +88,11 @@ public class SearchResult extends PageResult<Goods> {
         this.brands = brands;
     }
 
+    public void setSpecs(List<Map<String, Object>> specs){
+        this.specs = specs;
+    }
+
+    public List<Map<String, Object>> getSpecs(){
+        return this.specs;
+    }
 }

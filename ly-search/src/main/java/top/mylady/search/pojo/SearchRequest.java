@@ -1,10 +1,20 @@
 package top.mylady.search.pojo;
+import java.util.Map;
 
 
 public class SearchRequest {
 
     private String key;
     private Integer page;
+
+    //排序字段
+    private String sortBy;
+
+    //是否降序
+    private Boolean descending;
+
+    //过滤字段
+    private Map<String, String> filter;
 
     private static final Integer DEFAULT_SIZE = 20;  //分页数
 
@@ -30,6 +40,13 @@ public class SearchRequest {
         return DEFAULT_SIZE;
     }
 
+    public Map<String, String> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Map<String, String> filter) {
+        this.filter = filter;
+    }
 
 
 }
