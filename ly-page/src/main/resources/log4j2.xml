@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--参考设置: https://www.cnblogs.com/keeya/p/10101547.html-->
+<!--参考: https://www.cnblogs.com/keeya/p/10101547.html-->
 <configuration>
     <properties>
         <property name="LOG_PATTERN" value="%date{HH:mm:ss.SSS}|%-5level| %logger{36} |%L row: %msg%n" />
-        <property name="default"     value="%d{DEFAULT}|%-4sn|%-5level|M: %M: %l|%L row: %msg%n"/>
+        <property name="default" value="%d{DEFAULT}|%-4sn|%-5level|M: %M: %l|%L row: %msg%n"/>
         <property name="simplePrint" value="%d|%-5level|%L 行: %msg%n"/>
-        <!-- 定义日志存储的路径 -->
-        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/ly-shop/logs/search" />
+        <property name="FILE_PATH" value="H:/myPprogramming/javaCode/ly-shop/logs/page" />
         <property name="CONSOLE_PATTERN">%d{DEFAULT}|%-4sn|%-5level|M: %M|%msg%n</property>
-        <property name="FILE_NAME">leyou-eureka</property>
+        <property name="FILE_NAME">goods-service</property>
     </properties>
     
-    <!--先定义所有的appender-->
     <appenders>
-        
-        <File name="Filelog" fileName="${FILE_PATH}/autoClear.log" append="false">
+        <!--文件会打印出所有信息, 这个log每次运行程序会自动清空, 由append属性决定, 适合临时测试用-->
+        <File name="Filelog" fileName="${FILE_PATH}/test.log" append="false">
             <PatternLayout pattern="${simplePrint}"/>
-            <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
         </File>
         
         <!--控制台-->
@@ -61,36 +59,33 @@
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
-    
     </appenders>
     
-    
-    <!--Logger节点用来单独指定日志的形式，比如要为指定包下的class指定不同的日志级别等。-->
-    <!--然后定义loggers，只有定义了logger并引入的appender，appender才会生效-->
+
     <loggers>
-        
-        <logger name="org.mybatis" level="warn" additivity="false">
-            <AppenderRef ref="RollingFileInfo"/>
+        <logger name="org.apache" level="warn" additivity="false">
+            <AppenderRef ref="Console"/>
         </logger>
         
-        <logger name="com.zaxxer" level="warn" additivity="false">
-            <AppenderRef ref="RollingFileInfo"/>
+        <logger name="org.springframework" level="warn" additivity="false">
+            <AppenderRef ref="Console"/>
         </logger>
         
-        <Logger name="org.springframework" level="debug" additivity="false">
-            <AppenderRef ref="RollingFileInfo"/>
+        <Logger name="org.mybatis" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
         </Logger>
-        
-        <Logger name="org.apache" level="warn" additivity="false">
-            <AppenderRef ref="RollingFileInfo"/>
+
+        <Logger name="com.netflix" level="off" additivity="false">
+            <AppenderRef ref="Console"/>
         </Logger>
-        
-        <Logger name="com.netflix" level="warn" additivity="false">
-            <AppenderRef ref="RollingFileInfo"/>
+    
+        <!--warn-->
+        <Logger name="org.jboss" level="warn" additivity="false">
+            <AppenderRef ref="Console"/>
         </Logger>
-        
+    
         <Logger name="org.hibernate" level="warn" additivity="false">
-            <AppenderRef ref="RollingFileInfo"/>
+            <AppenderRef ref="Console"/>
         </Logger>
         
         <root level="debug">

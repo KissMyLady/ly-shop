@@ -210,7 +210,7 @@ public class GoodsService {
             logger.warn("警告 skuList 添加库存失败. 不是核心数据, 当前数据集为空, 不return");
         }
 
-        logger.info("查询skuList数据完毕, 返回处理后的skuList数据");
+        //logger.info("查询skuList数据完毕, 返回处理后的skuList数据");
         return skuList;
     }
 

@@ -152,33 +152,30 @@ public class InsertEsService {
             logger.warn("规格参数表, 数据查询失败, 原因: "+ e);
         }
 
-        Map<Long, String> genericSpec = null;
-        Map<Long, List<String>> specialSpec = null;
+        Map<Long, String> genericSpec = new HashMap<>();
+        Map<Long, List<String>> specialSpec = new HashMap<>();
 
-        /**
-         * TODO: ElasticSearch 插入bug, 需要解决1
-         * 167 row: 获取通用规格参数错误, 原因e: java.lang.IllegalArgumentException: argument "content" is null
-         */
         if (spuDetail != null){
             try {
                 // 获取通用规格参数
-                genericSpec = JsonUtils.parseMap(spuDetail.getGenericSpec(), Long.class, String.class);
+                String strGeneric = spuDetail.getGenericSpec();
+                String strSpec    = spuDetail.getSpecialSpec();
 
-                //获取特有规格参数  使用自定义工具类解析数据
-                specialSpec = JsonUtils.nativeRead(spuDetail.getSpecialSpec(), new TypeReference<Map<Long, List<String>>>() {});
+                genericSpec = JsonUtils.parseMap(strGeneric, Long.class, String.class);
+                specialSpec = JsonUtils.nativeRead(strSpec, new TypeReference<Map<Long, List<String>>>() {});
             }
             catch (Exception e){
                 logger.warn("获取通用规格参数错误, 原因e: "+ e);
             }
         }
 
+        //genericSpec: {1=华为（HUAWEI）, 2=P20 plus, 3=2018.0, 5=180, 6=其它, 7=Android, 8=海思（Hisilicon）}
+        //specialSpec: {4=[宝石蓝, 亮黑色, 极光色, 樱粉金], 12=[6GB], 13=[128GB]}
+
         //将参数填入map
         Map<String,Object> specs = new HashMap<>();
 
-        /**
-         * TODO: ElasticSearch 插入bug, 需要解决2
-         * 199 row: 错误, 原因e: java.lang.NullPointerException
-         */
+        int numbers = 0;
         if (params != null){
             try {
                 for (SpecParam param : params) {
@@ -190,6 +187,7 @@ public class InsertEsService {
                     if(param.getGeneric()){
                         // 通用参数的数值类型有分段的情况存在，要做一个处理,不能按上面那种方法获得value
                         value = genericSpec.get(param.getId());
+
                         //判断是否为数值类型 处理成段,覆盖之前的value
                         if(param.getNumeric()){
                             value = chooseSegment(value.toString(),param);
@@ -198,12 +196,15 @@ public class InsertEsService {
                         // 特殊属性
                         value = specialSpec.get(param.getId());
                     }
+
                     value = (value == null ? "其他" : value);
-                    specs.put(key,value);
+                    specs.put(key, value);
+                    numbers ++;
                 }
+                System.out.println("specs数据填充完成, "+ numbers);
             }
             catch (Exception e){
-                logger.warn("错误, 原因e: "+ e);
+                logger.warn("params解析错误, 原因e: "+ e);
             }
 
         }else {
